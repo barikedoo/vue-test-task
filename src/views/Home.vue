@@ -4,6 +4,7 @@
         :perPageCustom="[[480, 1], [768, 3]]"
         paginationEnabled
         navigationEnabled
+        :perPage="1"
         >
         <Slide v-for="item in 6" :key="item.id">
           <SlideContent></SlideContent>

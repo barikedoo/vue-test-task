@@ -14,11 +14,10 @@
           <v-text-field
           v-model="formData.phone"
           :rules="phoneRules"
-          label="Phone (10 digits)"
+          label="Phone (8-###)"
           placeholder=" "
           required
-          mask=" (###)-###-##-##"
-          prefix="+7"
+          mask="#-(###)-###-##-##"
           validate-on-blur
           ></v-text-field>
 
@@ -40,8 +39,6 @@
           >
           submit
           </v-btn>
-
-          <v-btn @click="log">log</v-btn>
 
         </v-form>
 
@@ -73,7 +70,7 @@ export default {
       ],
       phoneRules: [
         v => !!v || 'Phone is required',
-        v => (v && v.length == 10) || 'Phone number must be 10 digits'
+        v => (v && v.length == 11) || 'Phone number must be 11 digits'
       ],
       messageRules: [
         v => !!v || 'Message is required',
@@ -93,8 +90,10 @@ export default {
 
           this.$store.dispatch('setFormData', this.formData)
 
+          // Имитируем запрос к серверу через промис и таймаут
+          
           let request = new Promise((resolve, reject) => {
-
+            
             setTimeout(()=>{
               
               let response = require('@/assets/serverResponse.json');
@@ -131,10 +130,6 @@ export default {
             }, 3000);
           })
         }
-      },
-
-      log() {
-      console.log({name: this.name, phone: '+7' + this.phone, msg: this.message })
       },
 
       updateFormName() {

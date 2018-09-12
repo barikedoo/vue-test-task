@@ -1,18 +1,42 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-layout>
+    <v-layout>
+      <v-flex xs12>
+        <Carousel 
+        :perPageCustom="[[480, 1], [768, 3]]"
+        paginationEnabled
+        >
+        <Slide v-for="item in 6" :key="item.id">
+          <SlideContent></SlideContent>
+        </Slide>  
+
+        </Carousel>
+      </v-flex>
+    </v-layout>
+  </v-layout>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
+import { Carousel, Slide } from 'vue-carousel';
+import SlideContent from '@/components/SlideContent.vue'
+
+  export default {
+
+    components: {
+      Carousel, 
+      Slide,
+      SlideContent
+    },
+
+    data() {
+      return {
+
+      }
+    }
   }
-}
 </script>
+
+<style>
+
+</style>

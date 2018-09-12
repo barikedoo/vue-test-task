@@ -16,8 +16,8 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.slider-image{
+<style>
+.slider-image {
     width: 100%;
     height: auto;
 }

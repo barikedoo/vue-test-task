@@ -1,6 +1,4 @@
 <template>
-  <v-layout>
-    <v-layout>
       <v-flex xs12>
         <Carousel 
         :perPageCustom="[[480, 1], [768, 3]]"
@@ -12,8 +10,6 @@
 
         </Carousel>
       </v-flex>
-    </v-layout>
-  </v-layout>
 </template>
 
 <script>

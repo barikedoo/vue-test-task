@@ -17,9 +17,11 @@ export default {
 </script>
 
 <style>
+@media screen and (min-width: 480px) {
 .slider-image {
     width: 100%;
-    max-width: 450px;
     height: auto;
+     
+}
 }
 </style>

@@ -1,12 +1,14 @@
 <template>
+  <div>
         <v-form ref="contactUsForm" v-model="valid" lazy-validation>
 
           <v-text-field
           v-model="formData.name"
           :rules="nameRules"
           label="Name"
-          placeholder=" "
+          placeholder="Enter your name"
           required
+          validate-on-blur
           ></v-text-field>
 
           <v-text-field
@@ -17,6 +19,7 @@
           required
           mask=" (###)-###-##-##"
           prefix="+7"
+          validate-on-blur
           ></v-text-field>
 
           <v-textarea
@@ -27,7 +30,8 @@
           :rules="messageRules"
           auto-grow
           counter="250"
-          value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through"
+          placeholder="Enter the message here"
+          validate-on-blur
           ></v-textarea>
 
           <v-btn
@@ -37,15 +41,25 @@
           submit
           </v-btn>
 
-          <v-btn @click="clear">clear</v-btn>
-
           <v-btn @click="log">log</v-btn>
 
         </v-form>
+
+      <CommonAlert :alertDetails="alertDetails"></CommonAlert>
+
+    </div>
 </template>
 
 <script>
+
+import CommonAlert from '@/components/CommonAlert'
+
 export default {
+
+  components: {
+    CommonAlert
+  },
+
     data: () => ({
       valid: true,
       formData: {
@@ -63,8 +77,13 @@ export default {
       ],
       messageRules: [
         v => !!v || 'Message is required',
-        v => (v && v.length <= 250) || 'Message cannot be longer than 250 characters'
+        v => (v && v.length <= 250) || 'Message should be 250 characters maximum'
       ],
+      alertDetails: {
+        type: 'success',
+        msg: '',
+        showAlert: false
+      }
     }),
 
     methods: {
@@ -83,29 +102,49 @@ export default {
               if(response.code == 200) {
                 resolve(response);
               } else {
-                throw SyntaxError('No file available')
+                reject('No file available')
               }
 
             }, 2000)
+
           })
           .then((response)=>{
             console.log(response);
+            this.alertDetails.showAlert = true;
+            this.alertDetails.msg = 'Thank you for your request. We\'ll contact you';
+            this.alertDetails.type = 'success';
+            this.formData.phone = '';
+            this.formData.message = '';
+
+            setTimeout(() => {
+              this.alertDetails.showAlert = false
+            }, 3000);
           })
           .catch((error)=>{
-            console.log(error)
+            console.log(error);
+            this.alertDetails.showAlert = true;
+            this.alertDetails.msg = error.message? error.message : 'There was some trouble. Please try again later';
+            this.alertDetails.type = 'error';
+
+            setTimeout(() => {
+              this.alertDetails.showAlert = false
+            }, 3000);
           })
         }
       },
 
-      clear () {
-        this.$refs.contactUsForm.reset()
-      },
-
       log() {
       console.log({name: this.name, phone: '+7' + this.phone, msg: this.message })
-    }
+      },
+
+      updateFormName() {
+        this.formData.name = this.$store.getters.formData.name;
+      },
     },
-    
+    created() {
+      this.updateFormName()
+    }
+
 }
 </script>
 

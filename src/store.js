@@ -8,8 +8,8 @@ export default new Vuex.Store({
   state: {
     formData: {
       name: 'Default Vuex name',
-      phone: '+79998887766',
-      message: 'Default Vuex message'
+      phone: '',
+      message: ''
     }
   },
 

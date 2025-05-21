@@ -8,5 +8,6 @@
   ],
     "extends": [
     "config:recommended"
-  ]
+  ],
+  "dependencyDashboard": true
 }
